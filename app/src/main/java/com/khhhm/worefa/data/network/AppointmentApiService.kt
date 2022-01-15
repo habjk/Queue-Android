@@ -17,9 +17,8 @@ interface AppointmentApiService {
     @GET("appointments/{id}")
     fun getSingleFindById(@Path("id" )id:Long): Deferred<Response<Appointment>>
 
-
-    @GET("app/user")
-    fun getMyAppointments(@Query("user") userEmail:String):Deferred<Response<List<Appointment>>>
+    @GET("appointments")
+    fun getAllAppointments():Deferred<Response<List<Appointment>>>
 
     @POST("appointments")
     fun postAppointments(@Body newAppointment: Appointment):Deferred<Response<Void>>

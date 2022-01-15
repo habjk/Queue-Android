@@ -9,14 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.khhhm.worefa.adapters.MyAppointRecyclerViewAdapter
 
 import com.khhhm.worefa.adapters.dummy.DummyContent
 import com.khhhm.worefa.adapters.dummy.DummyContent.DummyItem
-import com.khhhm.worefa.data.entitys.Appointment
-import com.khhhm.worefa.viewmodels.AppointmentViewModel
 
 /**
  * A fragment representing a list of Items.
@@ -27,7 +23,7 @@ class AppointFragment : Fragment() {
 
     // TODO: Customize parameters
     private var columnCount = 1
-    private lateinit var appointmentViewModel: AppointmentViewModel
+
     private var listener: OnListFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,21 +40,15 @@ class AppointFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_appoint_list, container, false)
 
-        val appointRecyclerViewAdapter:MyAppointRecyclerViewAdapter
         // Set the adapter
-        appointmentViewModel=ViewModelProviders.of(this).get(AppointmentViewModel::class.java)
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                appointRecyclerViewAdapter = MyAppointRecyclerViewAdapter(listener)
-                adapter=appointRecyclerViewAdapter
+                adapter = MyAppointRecyclerViewAdapter(DummyContent.ITEMS, listener)
             }
-
-            appointmentViewModel.getAllMyAppointments().observe(this, Observer { appoitments -> appointRecyclerViewAdapter.setAppointments(appoitments) })
-
         }
         return view
     }
@@ -90,7 +80,7 @@ class AppointFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: Any)
+        fun onListFragmentInteraction(item: DummyItem?)
     }
 
     companion object {

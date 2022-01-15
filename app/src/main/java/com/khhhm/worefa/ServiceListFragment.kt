@@ -9,13 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.khhhm.worefa.adapters.ServiceListRecyclerViewAdapter
 
 import com.khhhm.worefa.dummy.DummyContent
 import com.khhhm.worefa.dummy.DummyContent.DummyItem
 import com.khhhm.worefa.viewmodels.ServiceViewModel
+import kotlinx.android.synthetic.main.fragment_servicelist.view.*
 
 /**
  * A fragment representing a list of Items.
@@ -24,17 +27,16 @@ import com.khhhm.worefa.viewmodels.ServiceViewModel
  */
 class ServiceListFragment : Fragment() {
 
+
     // TODO: Customize parameters
     private var columnCount = 1
-
+    private lateinit var floatingActionButton: FloatingActionButton
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var servicesViewModel:ServiceViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
+
     }
 
     override fun onCreateView(
@@ -43,8 +45,10 @@ class ServiceListFragment : Fragment() {
     ): View? {
         val serviceListRecyclerViewAdapter:ServiceListRecyclerViewAdapter
         val view = inflater.inflate(R.layout.fragment_servicelist_list, container, false)
-        servicesViewModel= ServiceViewModel(activity?.application!!)
-                //ViewModelProviders.of(this).get(ServiceViewModel::class.java)
+        val application=activity?.application
+
+        servicesViewModel= ViewModelProviders.of(this).get(ServiceViewModel::class.java)
+                ViewModelProviders.of(this).get(ServiceViewModel::class.java)
         // Set the adapter
         if (view is RecyclerView) {
             with(view) {
@@ -53,14 +57,15 @@ class ServiceListFragment : Fragment() {
                     else -> GridLayoutManager(context, columnCount)
                 }
                 serviceListRecyclerViewAdapter = ServiceListRecyclerViewAdapter(listener)
-           //     serviceListRecyclerViewAdapter.setService(servicesViewModel.getCompanyServices(5))
                 adapter=serviceListRecyclerViewAdapter
             }
+        //    servicesViewModel.getCompanyServices(5).observe(this, Observer { services->serviceListRecyclerViewAdapter.setService(services) })
 
-           // servicesViewModel.insertService()
+            // servicesViewModel.insertService()
            // servicesViewModel.getCompanyServices(5).observe(this, Observer { services ->serviceListRecyclerViewAdapter.setService(services) })
 
         }
+
         return view
     }
 
@@ -94,18 +99,5 @@ class ServiceListFragment : Fragment() {
         fun onListFragmentInteraction(item: DummyItem?)
     }
 
-    companion object {
 
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            ServiceListFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
-    }
 }

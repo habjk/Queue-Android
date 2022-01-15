@@ -31,7 +31,8 @@ class loginFragment : Fragment() {
 
         val view=inflater.inflate(R.layout.fragment_login, container, false)
     view.findViewById<Button>(R.id.button).setOnClickListener {
-        Navigation.findNavController(it).navigate(R.id.action_loginFragment_to_homeFragment)
+        val directions=loginFragmentDirections.actionLoginFragmentToHomeFragment()
+        Navigation.findNavController(it).navigate(directions)
     }
         return view
 

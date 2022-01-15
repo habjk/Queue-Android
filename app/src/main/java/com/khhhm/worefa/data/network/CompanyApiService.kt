@@ -15,7 +15,7 @@ import retrofit2.http.Path
 
 interface CompanyApiService {
 
-    @GET("app/comp")
+    @GET("companies")
     fun getAllCompany():Deferred<Response<List<Company>>>
 
     @GET("companies/{id}")

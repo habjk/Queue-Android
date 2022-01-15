@@ -2,36 +2,31 @@ package com.khhhm.worefa.adapters
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.media.Image
+import android.text.Spannable
 import android.text.SpannableString
-import android.util.Log
+import android.text.style.ImageSpan
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.khhhm.worefa.AppointFragment
-import com.khhhm.worefa.CompanyFragment
-import com.khhhm.worefa.ServiceListFragment
 
 
-class MainViewPagerAdapter(val fragmentManager: FragmentManager,val context:Context?) : FragmentStatePagerAdapter(fragmentManager){
-    override fun getCount(): Int = 4
+class MainViewPagerAdapter(val fragmentManager: FragmentManager,val context:Context?) : FragmentPagerAdapter(fragmentManager) {
+    override fun getCount(): Int {
+        return 4
 
+    }
 
     override fun getItem(position: Int): Fragment {
-
+        var fragment = AppointFragment()
         if (position == 0) {
-            return AppointFragment()
+            fragment = AppointFragment()
         }
-        else if(position==1){
-            return CompanyFragment()
-        }else if(position==2){
-            Log.i("service List","Fragment")
-            return ServiceListFragment()
-        }
-        return AppointFragment()
 
+        return fragment
     }
 
     var imagesResId = listOf(
@@ -65,4 +60,5 @@ class MainViewPagerAdapter(val fragmentManager: FragmentManager,val context:Cont
         }
       return ""
     }
+
 }

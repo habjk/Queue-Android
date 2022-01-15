@@ -1,9 +1,5 @@
 package com.khhhm.worefa.data.entitys
 
-import android.content.Context
-import android.widget.Toast
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

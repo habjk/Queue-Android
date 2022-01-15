@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import com.khhhm.worefa.data.dao.CompanyDao
 import com.khhhm.worefa.data.entitys.Company
 import com.khhhm.worefa.data.network.CompanyApiService
-import com.khhhm.worefa.utilites.isNetworkConnected
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -16,29 +15,21 @@ class CompanyRepository private constructor(private val companyDao: CompanyDao,p
 
     fun getAllCompany()=this.companyDao.getAllCompanys()
 
-    fun getCompany(id:Long):LiveData<Company>{
+    fun getCompany(id:Long){
         GlobalScope.launch (Dispatchers.IO){
-          ///  val company=companyApiService.getCompany(id).await().body();
-         //   if(company!=null){
-            val company=Company(4,"ghghghgh","dfdf","5")
-            companyDao.insertAll(company)
-            val companys=companyDao.getCompany(5).value
+            val company=companyApiService.getCompany(id).await().body();
             if(company!=null){
-            Log.i("comany From Sqlite",companys?.name+"")
-            }else{
-            Log.i("Company From Sqlite","Is null")
+            companyDao.insertAll(company)
+            }
         }
-        }
-
-        return companyDao.getCompany(5)
     }
-    fun getCompaysFromApi(){}
     fun reloadCompanys(){
-        GlobalScope.launch (Dispatchers.IO) {
-            val companys =companyApiService.getAllCompany().await().body()
 
-            companyDao.getAllCompanys()
-        }
+        GlobalScope.launch (Dispatchers.IO) {
+            val companys =
+            //companyApiService.getAllCompany().await().body()
+                companyDao.getAllCompanys().value
+             }
     }
 
 

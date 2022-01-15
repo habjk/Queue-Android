@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.khhhm.worefa.data.WorefaDatabase
 import com.khhhm.worefa.data.dao.FeedDao
-import com.khhhm.worefa.data.network.FeedApiService
 import com.khhhm.worefa.data.repository.FeedRepository
 
 class FeedViewModel(application: Application):AndroidViewModel(application) {
@@ -13,6 +12,6 @@ class FeedViewModel(application: Application):AndroidViewModel(application) {
 
     init{
         val feedDao:FeedDao= WorefaDatabase.getDatabase(application).feedDao()
-        feedRepository= FeedRepository.getInstance(feedDao, FeedApiService.getInstance())
+        feedRepository= FeedRepository.getInstance(feedDao)
     }
 }
